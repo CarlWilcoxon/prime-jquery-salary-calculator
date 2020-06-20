@@ -49,13 +49,15 @@ function onReady() {
 
 function removeEmployee(event) {
   console.log('removeEmployee running', event.target);
+  $(event.target).parent().parent().remove();
 }
 
 function updateEmployeeTable() {
+  $('tbody').empty();
   employeeList.forEach(currentEmployee => {
   let formattedSalary = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentEmployee.annualSalary);
-
-  $('#tableFooter').before(`<tr id="${currentEmployee.employeeID}row">
+  
+  $('tbody').append(`<tr id="${currentEmployee.employeeID}row">
   <td>${currentEmployee.firstName}</td>
   <td>${currentEmployee.lastName}</td>
   <td>${currentEmployee.employeeID}</td>
@@ -63,4 +65,17 @@ function updateEmployeeTable() {
   <td>${formattedSalary}</td>
   <td><button class="removeButton" id="${currentEmployee.employeeID}button">Remove</button></td>
 </tr>`)});
+
+updateSum();
+}
+
+function updateSum() {
+  let annualTotal = 0;
+  let monthlyTotal = 0;
+  employeeList.forEach(currentEmployee => {
+    annualTotal += currentEmployee.annualSalary;
+  })
+  monthlyTotal = annualTotal/12;
+  let formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(monthlyTotal);
+  $('#monthlyTotal').append(formattedTotal)
 }

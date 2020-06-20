@@ -6,3 +6,8 @@ table, th, td {
 #tableFooter {
   height: 20px;
 }
+
+#monthlyTotalContainer {
+  text-align: right;
+  text-emphasis: bold;
+}
