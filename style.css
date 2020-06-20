@@ -3,6 +3,15 @@ table, th, td {
   padding: 4px;
   empty-cells: show;
 }
+
+thead {
+  background-color: goldenrod;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
 #tableFooter {
   height: 20px;
 }
@@ -10,4 +19,15 @@ table, th, td {
 #monthlyTotalContainer {
   text-align: right;
   text-emphasis: bold;
+}
+
+.overBudget {
+  background-color: red;
+}
+.atBudget {
+  background-color: gold;
+}
+
+.underBudget {
+  background-color: green;
 }

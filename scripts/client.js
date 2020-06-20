@@ -6,17 +6,49 @@ console.log( 'js' );
 
 $( document ).ready(onReady);
 
-const employeeList = [];
+const employeeList = [{
+  firstName: 'John',
+  lastName: 'Smith',
+  employeeID: 1496,
+  jobTitle: 'Lumberjack',
+  annualSalary: 130000
+}, {
+  firstName: 'firstName',
+  lastName: 'lastName',
+  employeeID: 1234,
+  jobTitle: 'jobTitle',
+  annualSalary: 1234.32
+},{
+  firstName: 'Jack',
+  lastName: 'Slash',
+  employeeID: 666,
+  jobTitle: 'Bandit',
+  annualSalary: 140000
+}];
+const budget = 20000;
+
+
+function checkBudget(total) {
+  //compare the total monthly salaries to the budget 
+  if (total > budget && !($('#monthlyTotal').hasClass('overBudget'))) {
+    $('#monthlyTotal').addClass('overBudget');
+  } else if (total === budget && !($('#monthlyTotal').hasClass('atBudget'))) {
+    $('#monthlyTotal').addClass('atBudget');
+  } else if (total < budget && !($('#monthlyTotal').hasClass('underBudget'))) {
+    $('#monthlyTotal').addClass('underBudget');
+  }
+}//end checkBudget
 
 function clearInputs() {
   $('#fullNameIn').val('');
   $('#IDIn').val('');
   $('#jobTitleIn').val('');
   $('#annualSalaryIn').val('');
-}
+}//end clearInputs
 
 function getEmployeeInput() {
-  
+  event.preventDefault();
+
   let fullName = $('#fullNameIn').val().split(' ');
   let firstName = fullName[0];
   let lastName = fullName[1];
@@ -36,7 +68,7 @@ function getEmployeeInput() {
   });
   clearInputs();
   updateEmployeeTable();
-}
+}//end getEmployeeInput
 
 
 function onReady() {
@@ -45,12 +77,26 @@ function onReady() {
   //setup event handlers
   $('#enterButton').on('click', getEmployeeInput);
   $('tbody').on('click', $('.removeButton'), removeEmployee)
-}
+
+  //initial checks
+  updateEmployeeTable();
+}//end onReady
 
 function removeEmployee(event) {
   console.log('removeEmployee running', event.target);
+  
+  employeeList.forEach(currentEmployee => {
+    //double equals so I don't have to convert str (button id) to int (employee id)
+    if (event.target.id.slice(0, -6) == currentEmployee.employeeID) {
+    employeeList.splice(employeeList.indexOf(currentEmployee),1);}
+    
+    //((event.target.id.slice(0, -6) == currentEmployee.employeeID) ? employeeList.splice(employeeList.indexOf(currentEmployee),1)
+  });//end For Each
+
+
   $(event.target).parent().parent().remove();
-}
+  updateSum();
+}//end removeEmployee
 
 function updateEmployeeTable() {
   $('tbody').empty();
@@ -67,7 +113,7 @@ function updateEmployeeTable() {
 </tr>`)});
 
 updateSum();
-}
+}//end updateEmployeeTable
 
 function updateSum() {
   let annualTotal = 0;
@@ -76,6 +122,10 @@ function updateSum() {
     annualTotal += currentEmployee.annualSalary;
   })
   monthlyTotal = annualTotal/12;
+  
+  checkBudget(monthlyTotal);
+
   let formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(monthlyTotal);
-  $('#monthlyTotal').append(formattedTotal)
-}
+  $('#monthlyTotal').empty();
+  $('#monthlyTotal').append(formattedTotal);
+}//end updateSum
