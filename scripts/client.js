@@ -35,7 +35,9 @@ function getEmployeeInput() {
     annualSalary
   });
   clearInputs();
+  updateEmployeeTable();
 }
+
 
 function onReady() {
   console.log('DOM is ready');
@@ -47,4 +49,18 @@ function onReady() {
 
 function removeEmployee(event) {
   console.log('removeEmployee running', event.target);
+}
+
+function updateEmployeeTable() {
+  employeeList.forEach(currentEmployee => {
+  let formattedSalary = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentEmployee.annualSalary);
+
+  $('#tableFooter').before(`<tr id="${currentEmployee.employeeID}row">
+  <td>${currentEmployee.firstName}</td>
+  <td>${currentEmployee.lastName}</td>
+  <td>${currentEmployee.employeeID}</td>
+  <td>${currentEmployee.jobTitle}</td>
+  <td>${formattedSalary}</td>
+  <td><button class="removeButton" id="${currentEmployee.employeeID}button">Remove</button></td>
+</tr>`)});
 }
