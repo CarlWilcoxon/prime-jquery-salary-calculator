@@ -3,3 +3,6 @@ table, th, td {
   padding: 4px;
   empty-cells: show;
 }
+#tableFooter {
+  height: 20px;
+}
