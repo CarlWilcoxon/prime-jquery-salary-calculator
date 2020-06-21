@@ -34,10 +34,22 @@ function clearInputs() {
   $('#annualSalaryIn').val('');
 }//end clearInputs
 
+function errorOut(errorWords) {
+    $('#errorMessage').empty();
+    $('#errorMessage').append(errorWords);
+}
+
 function getEmployeeInput() {
   event.preventDefault();
 
   console.log(event.target);
+
+  //full name input validation
+  if (!($('#fullNameIn').val().split(' ').length === 2)) {
+    errorOut('Please, enter the employee\'s first and last name.');
+    return;
+  }
+
   let fullName = $('#fullNameIn').val().split(' ');
   let firstName = fullName[0];
   let lastName = fullName[1];
@@ -47,6 +59,20 @@ function getEmployeeInput() {
   let employeeID = parseInt($('#IDIn').val());
   let jobTitle = $('#jobTitleIn').val();
   let annualSalary = parseFloat($('#annualSalaryIn').val());
+
+  let booly = false;
+  //making sure each employee ID number is unique
+  employeeList.forEach(currentEmployee => {
+    //double equals so I don't have to convert str (input id) to int (list id)
+    if ( employeeID === currentEmployee.employeeID) {
+      errorOut('Employee ID numbers must be unique.');
+      booly = true;}//end if
+  });//end For Each
+
+  //using booly to store a boolean, because I can't return to escape the method from within a loop
+  if (booly) {
+    return;
+  }
 
   employeeList.push({
     firstName,
@@ -65,9 +91,9 @@ function onReady() {
 
   //setup event handlers
   $('#enterButton').on('click', getEmployeeInput);
-  $('tbody').on('click', $('.removeButton'), removeEmployee)
+  $('table').on('click', $('.removeButton'), removeEmployee)
 
-  //initial checks
+  //setup initial table
   updateEmployeeTable();
 }//end onReady
 

@@ -1,3 +1,6 @@
+body {
+  background-color: snow;
+}
 table, th, td {
   border: 1px solid black;
   padding: 4px;
@@ -9,14 +12,18 @@ thead {
   background-color: goldenrod;
 }
 
-tr:nth-child(even) {
-  background-color: lightgrey;
+tbody > tr:nth-child(odd) {
+  background-color: white;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: beige;
 }
 
 
 tfoot > tr > td {
   height: 20px;
-  background-color: yellow;
+  background-color: burlywood;
   border:transparent;
 }
 
