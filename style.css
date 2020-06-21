@@ -23,7 +23,6 @@ tfoot > tr > td {
 #monthlyTotalContainer {
   float: right;
   text-align: right;
-  text-emphasis: bold;
 }
 
 .overBudget {

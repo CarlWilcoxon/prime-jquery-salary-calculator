@@ -44,9 +44,9 @@ function getEmployeeInput() {
 
   //TODO input validation to make sure that the IDs are unique
 
-  let employeeID = $('#IDIn').val();
+  let employeeID = parseInt($('#IDIn').val());
   let jobTitle = $('#jobTitleIn').val();
-  let annualSalary = $('#annualSalaryIn').val();
+  let annualSalary = parseFloat($('#annualSalaryIn').val());
 
   employeeList.push({
     firstName,
@@ -55,7 +55,7 @@ function getEmployeeInput() {
     jobTitle,
     annualSalary
   });
-  //clearInputs();
+  clearInputs();
   updateEmployeeTable();
 }//end getEmployeeInput
 
