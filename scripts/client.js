@@ -124,4 +124,5 @@ function updateSum() {
   } else if (total < budget && !($('#monthlyTotal').hasClass('underBudget'))) {
     $('#monthlyTotal').removeClass('atBudget overBudget').addClass('underBudget');
   }
+  delete formattedTotal;
 }//end update Sum
