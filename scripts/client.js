@@ -27,18 +27,6 @@ const employeeList = [{
 }];
 const budget = 20000;
 
-
-function checkBudget(total) {
-  //compare the total monthly salaries to the budget 
-  if (total > budget && !($('#monthlyTotal').hasClass('overBudget'))) {
-    $('#monthlyTotal').addClass('overBudget');
-  } else if (total === budget && !($('#monthlyTotal').hasClass('atBudget'))) {
-    $('#monthlyTotal').addClass('atBudget');
-  } else if (total < budget && !($('#monthlyTotal').hasClass('underBudget'))) {
-    $('#monthlyTotal').addClass('underBudget');
-  }
-}//end checkBudget
-
 function clearInputs() {
   $('#fullNameIn').val('');
   $('#IDIn').val('');
@@ -49,6 +37,7 @@ function clearInputs() {
 function getEmployeeInput() {
   event.preventDefault();
 
+  console.log(event.target);
   let fullName = $('#fullNameIn').val().split(' ');
   let firstName = fullName[0];
   let lastName = fullName[1];
@@ -66,7 +55,7 @@ function getEmployeeInput() {
     jobTitle,
     annualSalary
   });
-  clearInputs();
+  //clearInputs();
   updateEmployeeTable();
 }//end getEmployeeInput
 
@@ -89,8 +78,6 @@ function removeEmployee(event) {
     //double equals so I don't have to convert str (button id) to int (employee id)
     if (event.target.id.slice(0, -6) == currentEmployee.employeeID) {
     employeeList.splice(employeeList.indexOf(currentEmployee),1);}
-    
-    //((event.target.id.slice(0, -6) == currentEmployee.employeeID) ? employeeList.splice(employeeList.indexOf(currentEmployee),1)
   });//end For Each
 
 
@@ -110,22 +97,31 @@ function updateEmployeeTable() {
   <td>${currentEmployee.jobTitle}</td>
   <td>${formattedSalary}</td>
   <td><button class="removeButton" id="${currentEmployee.employeeID}button">Remove</button></td>
-</tr>`)});
-
+</tr>`)})//end foreach
 updateSum();
 }//end updateEmployeeTable
 
 function updateSum() {
+  console.log('updateSum running');
   let annualTotal = 0;
-  let monthlyTotal = 0;
-  employeeList.forEach(currentEmployee => {
-    annualTotal += currentEmployee.annualSalary;
-  })
-  monthlyTotal = annualTotal/12;
+  let total = 0;
   
-  checkBudget(monthlyTotal);
+  employeeList.forEach(employee => {
+    annualTotal += employee.annualSalary;
+  })//end foreach
+  
+  total = annualTotal/12;
 
-  let formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(monthlyTotal);
+  let formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total);
   $('#monthlyTotal').empty();
   $('#monthlyTotal').append(formattedTotal);
-}//end updateSum
+
+  //compare the total monthly salaries to the budget 
+  if (total > budget && !($('#monthlyTotal').hasClass('overBudget'))) {
+    $('#monthlyTotal').removeClass('atBudget underBudget').addClass('overBudget');
+  } else if (total === budget && !($('#monthlyTotal').hasClass('atBudget'))) {
+    $('#monthlyTotal').removeClass('overBudget underBudget').addClass('atBudget');
+  } else if (total < budget && !($('#monthlyTotal').hasClass('underBudget'))) {
+    $('#monthlyTotal').removeClass('atBudget overBudget').addClass('underBudget');
+  }
+}//end update Sum

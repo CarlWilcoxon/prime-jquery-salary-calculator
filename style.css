@@ -1,6 +1,7 @@
 table, th, td {
   border: 1px solid black;
   padding: 4px;
+  border-collapse: collapse;
   empty-cells: show;
 }
 
@@ -9,14 +10,18 @@ thead {
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: lightgrey;
 }
 
-#tableFooter {
+
+tfoot > tr > td {
   height: 20px;
+  background-color: yellow;
+  border:transparent;
 }
 
 #monthlyTotalContainer {
+  float: right;
   text-align: right;
   text-emphasis: bold;
 }
