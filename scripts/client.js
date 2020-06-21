@@ -68,12 +68,12 @@ function getEmployeeInput() {
       errorOut('Employee ID numbers must be unique.');
       booly = true;}//end if
   });//end For Each
-
   //using booly to store a boolean, because I can't return to escape the method from within a loop
   if (booly) {
     return;
   }
 
+  //add the employee to the array
   employeeList.push({
     firstName,
     lastName,
@@ -114,17 +114,19 @@ function removeEmployee(event) {
 function updateEmployeeTable() {
   $('tbody').empty();
   employeeList.forEach(currentEmployee => {
-  let formattedSalary = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentEmployee.annualSalary);
-  
-  $('tbody').append(`<tr id="${currentEmployee.employeeID}row">
-  <td>${currentEmployee.firstName}</td>
-  <td>${currentEmployee.lastName}</td>
-  <td>${currentEmployee.employeeID}</td>
-  <td>${currentEmployee.jobTitle}</td>
-  <td>${formattedSalary}</td>
-  <td><button class="removeButton" id="${currentEmployee.employeeID}button">Remove</button></td>
-</tr>`)})//end foreach
-updateSum();
+    let formattedSalary = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentEmployee.annualSalary);
+    
+    $('tbody').append(`<tr id="${currentEmployee.employeeID}row">
+    <td>${currentEmployee.firstName}</td>
+    <td>${currentEmployee.lastName}</td>
+    <td>${currentEmployee.employeeID}</td>
+    <td>${currentEmployee.jobTitle}</td>
+    <td>${formattedSalary}</td>
+    <td><button class="removeButton" id="${currentEmployee.employeeID}button">Remove</button></td>
+    </tr>`)
+    delete formattedTotal;
+  })//end foreach
+  updateSum();
 }//end updateEmployeeTable
 
 function updateSum() {
