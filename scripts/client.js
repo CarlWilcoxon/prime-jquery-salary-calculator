@@ -6,25 +6,7 @@ console.log( 'js' );
 
 $( document ).ready(onReady);
 
-const employeeList = [{
-  firstName: 'John',
-  lastName: 'Smith',
-  employeeID: 1496,
-  jobTitle: 'Lumberjack',
-  annualSalary: 130000
-}, {
-  firstName: 'firstName',
-  lastName: 'lastName',
-  employeeID: 1234,
-  jobTitle: 'jobTitle',
-  annualSalary: 1234.32
-},{
-  firstName: 'Jack',
-  lastName: 'Slash',
-  employeeID: 666,
-  jobTitle: 'Bandit',
-  annualSalary: 140000
-}];
+const employeeList = [];
 const budget = 20000;
 
 function clearInputs() {
